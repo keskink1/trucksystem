@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Title</title>
+</h:head>
+
+<h:body>
+
+    <div style="display: block" align="center">
+        <h:form>
+            <p:button outcome="usermenu" value="User menu"/>
+            <br/>
+            <h:panelGroup id="descPanel">
+                <p:selectBooleanCheckbox value="#{checkboxBean.checked}">
+                    <p:outputLabel value="Pass" style="margin-right:10px;"/>
+                    <p:ajax listener="#{checkboxBean.onTickCheckbox}" update="descPanel" process="@this"/>
+                </p:selectBooleanCheckbox>
+                <br/>
+                <p:inputTextarea rows="4" cols="20" value="#{checkboxBean.description}"
+                                 rendered="#{checkboxBean.checked}"/>
+                <br/>
+                <p:commandButton action="#{checkboxBean.saveTextToDB}" rendered="#{checkboxBean.checked}" value="Send" update="@form"/>
+            </h:panelGroup>
+
+            <p:messages id="msgs" showDetail="true" autoUpdate="true" />
+
+        </h:form>
+    </div>
+
+</h:body>
+
+</html>

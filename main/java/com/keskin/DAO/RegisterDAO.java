@@ -1,6 +1,9 @@
 package com.keskin.DAO;
 
+import com.keskin.model.Roles;
+
 import javax.ejb.Stateless;
+import javax.management.relation.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +16,7 @@ public class RegisterDAO {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "1234";
 
-    public boolean registerUser(String firstname, String lastname, int age) {
+    public boolean registerUser(String firstname, String lastname, int age, Roles roles) {
 
         Connection connection = null;
         PreparedStatement psmt = null;
@@ -24,7 +27,7 @@ public class RegisterDAO {
 
         try {
             //write query
-            String query = "INSERT INTO drivers(first_name, last_name, age) VALUES (?,?,?)";
+            String query = "INSERT INTO drivers(first_name, last_name, age, roles) VALUES (?,?,?,?)";
 
             psmt = connection.prepareStatement(query);
 
@@ -32,6 +35,7 @@ public class RegisterDAO {
             psmt.setString(1, firstname);
             psmt.setString(2, lastname);
             psmt.setInt(3, age);
+            psmt.setString(4, roles.name());
 
             int affected_rows = psmt.executeUpdate();
             return affected_rows > 0;
@@ -51,7 +55,7 @@ public class RegisterDAO {
 
     }
 
-    public boolean doesUserExistOnDB(String firstname){
+    public boolean doesUserExistOnDB(String firstname, String lastname){
         Connection connection = null;
         PreparedStatement psmt = null;
         ResultSet rs = null;
@@ -59,10 +63,11 @@ public class RegisterDAO {
         connection = DBUtils.getConnection(DB_NAME, DB_USER, DB_PASSWORD);
 
         try {
-            String query = "SELECT * FROM drivers WHERE first_name = ?";
+            String query = "SELECT * FROM drivers WHERE first_name = ? AND last_name = ?";
             psmt = connection.prepareStatement(query);
 
             psmt.setString(1, firstname);
+            psmt.setString(2, lastname);
 
             rs = psmt.executeQuery();
 
@@ -75,9 +80,9 @@ public class RegisterDAO {
             throw new RuntimeException(e);
         }finally {
             try {
-                rs.close();
-                psmt.close();
-                connection.close();
+                if (rs != null) rs.close();
+                if (psmt != null) psmt.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

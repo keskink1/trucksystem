@@ -6,29 +6,27 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:kaan="http://xmlns.jcp.org/jsf/composite/kaan"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
 </h:head>
-
+‚
 <h:body>
     <div align="center">
         <h:form>
             <p:panel>
-                <p:panelGrid columns="2">
 
-                    <h:outputLabel value="First Name" for="fname"/>
-                    <p:inputText value="#{login.firstname}" id="fname" required="true"
-                                 requiredMessage="First name must be filled."/>
+                    <kaan:myComponent label="First name" value="#{login.firstname}" required="true" requiredMessage="First name cannot empty"/>
 
-                    <h:outputLabel value="Last Name" for="lname"/>
-                    <p:inputText value="#{login.lastname}" id="lname" required="true" requiredMessage="Last name must be filled."/>
+                    <kaan:myComponent label="Last name" value="#{login.lastname}" required="true" requiredMessage="Last name cannot empty"/>
 
-                </p:panelGrid>
                 <div align="center">
-                    <p:commandButton action="#{login.checkUser}" value="Login" update="@form"/>
+                    <p:commandButton action="#{login.checkUser}" value="Login" update="@form" type="submit"
+                                     styleClass="btn btn-primary"/>
                 </div>
                 <p:messages showDetail="true"/>
             </p:panel>

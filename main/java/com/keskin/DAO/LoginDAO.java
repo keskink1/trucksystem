@@ -1,6 +1,7 @@
 package com.keskin.DAO;
 
 import com.keskin.model.Driver;
+import com.keskin.model.Roles;
 
 import javax.ejb.Stateless;
 import java.sql.*;
@@ -76,6 +77,7 @@ public class LoginDAO {
                 driver.setFirst_name(rs.getString("first_name"));
                 driver.setLast_name(rs.getString("last_name"));
                 driver.setAge(rs.getInt("age"));
+                driver.setRoles(Roles.valueOf(rs.getString("roles")));
                 return driver;
             }
 
@@ -85,6 +87,7 @@ public class LoginDAO {
             throw new RuntimeException(e);
         }finally {
             try {
+                rs.close();
                 psmt.close();
                 connection.close();
             } catch (SQLException e) {

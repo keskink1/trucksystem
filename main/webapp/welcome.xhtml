@@ -9,13 +9,46 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 
+
 <h:head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
 </h:head>
 
 <h:body>
 
-    <h1>Welcome</h1>
+    <h:panelGroup rendered="#{sessionScopeBean.driver.roles.name() eq 'ADMIN'}">
+        <div style="display: block" align="center">
+            <h1>Welcome to admin panel!</h1>
+        </div>
+        <div style="display: block" align="center">
+            <p:button value="Manage Drivers" outcome="managedrivers" styleClass="btn btn-primary"/>
+            <p:button value="Manage Trucks" outcome="managetrucks" styleClass="btn btn-primary"/>
+        </div>
+    </h:panelGroup>
+
+
+    <h:panelGroup rendered="#{sessionScopeBean.driver.roles.name() eq 'USER'}">
+        <div style="display: block" align="center">
+            <h2>
+                Welcome <b>#{sessionScopeBean.driver.first_name} #{sessionScopeBean.driver.last_name}</b>
+            </h2>
+
+            <h:form>
+                <p:selectBooleanCheckbox value="#{dashboardBean.enableButton}">
+                    <p:outputLabel styleClass="form-label" value="I accept terms and conditions" style="margin-right:10px;"/>
+                    <p:ajax update="myButton"/>
+                </p:selectBooleanCheckbox>
+                <br/>
+
+                <p:commandButton id="myButton" value="Continue"
+                                 action="#{dashboardBean.proceed}"
+                                 disabled="#{not dashboardBean.enableButton}" />
+            </h:form>
+        </div>
+    </h:panelGroup>
+
 
 </h:body>
 

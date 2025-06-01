@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<composite:interface>
+    <composite:attribute name="label" required="true"/>
+    <composite:attribute name="value" required="true"/>
+    <composite:attribute name="required" required="false" default="false"/>
+    <composite:attribute name="requiredMessage" required="false"/>
+</composite:interface>
+
+<composite:implementation>
+    <p:panelGrid columns="2">
+        <h:outputLabel value="#{cc.attrs.label}" for="input"/>
+        <p:inputText id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required eq true}" requiredMessage="#{cc.attrs.requiredMessage}"/>
+    </p:panelGrid>
+</composite:implementation>
+
+</html>

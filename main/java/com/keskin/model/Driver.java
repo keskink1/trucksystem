@@ -1,9 +1,6 @@
 package com.keskin.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Driver {
@@ -15,14 +12,19 @@ public class Driver {
     private String last_name;
     private int age;
 
+    @Enumerated(EnumType.STRING)
+    private Roles roles;
+
     public Driver() {
     }
 
-    public Driver(int id, String first_name, String last_name, int age) {
+    public Driver(int id, String first_name, String last_name, int age, Roles roles) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.age = age;
+        this.roles = roles;
+
     }
 
     public int getId() {
@@ -56,4 +58,13 @@ public class Driver {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public Roles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Roles roles) {
+        this.roles = roles;
+    }
+
 }
